@@ -1,0 +1,10 @@
+pandas
+datasets
+openpyxl
+openai
+anthropic
+python-dotenv
+scikit-learn
+hdbscan
+plotly
+kneed
