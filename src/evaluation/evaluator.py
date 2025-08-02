@@ -79,7 +79,8 @@ class OntologyEvaluator:
             num_clusters=len(ontology_categories),
             max_similarity=max_similarity,
             passes_exclusivity=passes_exclusivity,
-            redundant_intents=redundant_intents
+            redundant_intents=redundant_intents,
+            has_duplicates=duplicate_check.has_duplicates
         )
         
         return metrics
@@ -168,6 +169,7 @@ class OntologyEvaluator:
                     'Num_Clusters': metrics.num_clusters,
                     'Max_Similarity': metrics.max_similarity,
                     'Passes_Exclusivity': '✅' if metrics.passes_exclusivity else '❌',
+                    'Has_Duplicates_LLM': metrics.has_duplicates,
                     'Redundant_Intents_Count': len(metrics.redundant_intents),
                     'Redundant_Intents': ', '.join(metrics.redundant_intents)
                 }

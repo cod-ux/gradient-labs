@@ -1,6 +1,6 @@
-# Customer Intent Ontology Building System
+# Ontology Building System
 
-A comprehensive system for building and evaluating customer intent ontologies from conversation data using machine learning clustering and LLM-based analysis.
+A system for building and evaluating ontologies to classify conversations conversations based on intent from conversation data using machine learning clustering and LLM-based analysis.
 
 ## Overview
 
@@ -17,26 +17,31 @@ gradient-labs/
 ├── src/                           # Source code
 │   ├── data/                      # Data handling and file management
 │   ├── intent_generation/         # Intent generation from conversations
-│   ├── clustering/                # Clustering algorithms
+│   ├── clustering/                # Clustering algorithms (agglomerative, hdbscan)
 │   ├── ontology/                  # Ontology building and merging
-│   ├── evaluation/                # Quality assessment
+│   ├── evaluation/                # Quality assessment and metrics
 │   ├── visualization/             # PCA plots and visualizations
 │   └── utils/                     # Utilities and LLM client
 ├── scripts/                       # Executable scripts
 │   ├── run_full_pipeline.py       # Main pipeline orchestrator
 │   ├── compare_thresholds.py      # Parameter comparison
-│   ├── generate_visualizations.py # Visualization generation
-│   └── migrate_data.py            # Data migration utility
+│   └── generate_visualizations.py # Visualization generation
 ├── data/                          # Organized data storage
-│   ├── raw/                       # Original datasets
-│   ├── ontologies/                # Generated ontologies
-│   ├── clusters/                  # Clustering results
-│   ├── intent_categories/         # Final intent categories
-│   └── evaluations/               # Evaluation results
-├── outputs/                       # Generated outputs
-│   ├── visualizations/            # HTML visualizations
-│   └── reports/                   # Analysis reports
-└── config/                        # Configuration settings
+│   ├── raw/                       # Original datasets (customer_conversations.xlsx)
+│   ├── initial_intents/           # Generated initial intents
+│   ├── ontologies/                # Generated ontologies by method and threshold
+│   │   ├── agglomerative/         # Agglomerative clustering results
+│   │   └── hdbscan/               # HDBSCAN clustering results
+│   ├── clusters/                  # Clustering results by method and parameter
+│   │   ├── agglomerative/         # Reduced clusters for different thresholds
+│   │   └── hdbscan/               # HDBSCAN clustering outputs
+│   └── evaluations/               # Evaluation results and reports
+│       ├── classified_conversations/ # Classified conversation results
+│       ├── comparison_reports/    # Ontology comparison summaries
+│       └── metrics/               # Evaluation metrics
+├── visualizations/                # Generated HTML visualizations
+├── config/                        # Configuration settings
+└── requirements.txt               # Python dependencies
 ```
 
 ## Quick Start
@@ -174,32 +179,20 @@ print(f"Mutual Exclusivity: {'✅' if metrics.passes_exclusivity else '❌'}")
 
 ### Data Structure
 All outputs are organized in the `data/` directory:
-- `ontologies/` - JSON files with generated customer intents
-- `clusters/` - Detailed clustering results by method
-- `intent_categories/` - Final intent categories for each configuration
-- `evaluations/` - Classification results and comparison reports
+- `raw/` - Original conversation datasets (customer_conversations.xlsx)
+- `initial_intents/` - Generated initial intents from conversation analysis
+- `ontologies/` - Final ontologies organized by clustering method and parameters
+  - `agglomerative/` - Results for different distance thresholds (0.58-0.64)
+  - `hdbscan/` - HDBSCAN clustering results
+- `clusters/` - Intermediate clustering results with reduced cluster data
+- `evaluations/` - Assessment results and reports
+  - `classified_conversations/` - Conversation classification results by method/threshold
+  - `comparison_reports/` - Ontology comparison summaries
+  - `metrics/` - Detailed evaluation metrics
 
 ### Visualizations
-Interactive HTML files in `outputs/visualizations/`:
-- 3D PCA plots showing intent clustering
+Interactive HTML files in `visualizations/`:
+- `agglomerative_clustering_pca_visualization.html` - 3D PCA plot for agglomerative clustering
+- `hdbscan_clustering_pca_visualization.html` - 3D PCA plot for HDBSCAN clustering
 - Hover details with intent names and descriptions
 
-## Migration
-
-If you have existing files in the old structure, run:
-```bash
-python scripts/migrate_data.py
-```
-
-This will automatically move files to the new organized structure.
-
-## Contributing
-
-The system is designed to be modular and extensible:
-- Add new clustering algorithms by extending `BaseClustering`
-- Implement custom evaluation metrics in the `evaluation` module
-- Create new visualization types in the `visualization` module
-
-## License
-
-[Add your license information here]

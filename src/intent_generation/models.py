@@ -70,3 +70,4 @@ class EvaluationMetrics(BaseModel):
     max_similarity: float = Field(description="Maximum pairwise similarity between categories")
     passes_exclusivity: bool = Field(description="Whether the ontology passes mutual exclusivity threshold")
     redundant_intents: List[str] = Field(description="List of intents with 0% usage")
+    has_duplicates: str = Field(description="LLM-based binary judgment of whether there are exact duplicate intents ('yes' or 'no')")
